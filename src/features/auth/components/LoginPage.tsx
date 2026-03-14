@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLogin } from '../hooks/useLogin'
+import { useAuthStore } from '../../../store/authStore'
 import InputField from '../../../shared/components/InputField'
 import Button from '../../../shared/components/Button'
 
@@ -9,10 +10,12 @@ import Button from '../../../shared/components/Button'
  * This component owns the login form UI and delegates all logic to useLogin.
  * It handles local form state and validation feedback only.
  * No API calls, no auth logic — all of that lives in the hook.
+ * Role-based redirect after login is handled via useEffect — not inline.
  */
 const LoginPage = () => {
   const navigate = useNavigate()
   const { login, isLoading, errorMessage, requires2FA, tempToken } = useLogin()
+  const { user, isAuthenticated } = useAuthStore()
 
   const [usernameOrEmail, setUsernameOrEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -20,9 +23,26 @@ const LoginPage = () => {
 
   // When backend signals 2FA is required, navigate to the 2FA page
   // passing the tempToken via router state so TwoFactorPage can access it
-  if (requires2FA && tempToken) {
-    navigate('/2fa', { state: { tempToken } })
-  }
+  useEffect(() => {
+    if (requires2FA && tempToken) {
+      navigate('/2fa', { state: { tempToken } })
+    }
+  }, [requires2FA, tempToken, navigate])
+
+  // Role-based redirect after successful login
+  // Runs whenever isAuthenticated or user changes
+  useEffect(() => {
+    if (!isAuthenticated || !user) return
+
+    const roleRedirectMap: Record<string, string> = {
+      ROLE_CUSTOMER: '/dashboard',
+      ROLE_TELLER: '/teller',
+      ROLE_ADMIN: '/admin',
+    }
+
+    const destination = roleRedirectMap[user.role] ?? '/dashboard'
+    navigate(destination, { replace: true })
+  }, [isAuthenticated, user, navigate])
 
   const handleSubmit = async () => {
     setValidationError(null)
@@ -39,12 +59,6 @@ const LoginPage = () => {
     }
 
     await login({ usernameOrEmail, password })
-
-    // On successful login the auth store is updated by the hook.
-    // Navigate to dashboard only if not redirected to 2FA.
-    if (!requires2FA) {
-      navigate('/dashboard')
-    }
   }
 
   return (
