@@ -5,6 +5,8 @@ import LoginPage from '../features/auth/components/LoginPage'
 import RegisterPage from '../features/auth/components/RegisterPage'
 import TwoFactorPage from '../features/auth/components/TwoFactorPage'
 import DashboardPage from '../features/dashboard/components/DashboardPage'
+import TransferPage from '../features/transfers/components/TransferPage'
+import TransactionHistoryPage from '../features/transfers/components/TransactionHistoryPage'
 
 // Placeholder pages for roles not yet built — replaced in Sprint 5
 const TellerPortalPage = () => (
@@ -86,6 +88,25 @@ const AppRouter = () => {
           element={
             <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Transfer routes */}
+        <Route
+          path="/transfer"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
+              <TransferPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/transactions"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
+              <TransactionHistoryPage />
             </ProtectedRoute>
           }
         />

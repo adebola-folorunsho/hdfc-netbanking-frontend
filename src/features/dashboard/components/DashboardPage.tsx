@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../../store/authStore'
 import { useMyAccounts } from '../hooks/useMyAccounts'
 import { useMyTransactions } from '../hooks/useMyTransactions'
@@ -23,16 +23,14 @@ const DashboardPage = () => {
   } = useMyAccounts()
 
   const {
-    transactions,
+    transactions: allTransactions,
     isLoading: transactionsLoading,
     isError: transactionsError,
-    currentPage,
-    totalPages,
-    isFirstPage,
-    isLastPage,
-    goToNextPage,
-    goToPreviousPage,
   } = useMyTransactions()
+
+  // Dashboard shows only the 5 most recent transactions
+  // Full history is available on the dedicated transaction history page
+  const recentTransactions = allTransactions.slice(0, 5)
 
   const handleLogout = () => {
     clearAuth()
@@ -50,6 +48,14 @@ const DashboardPage = () => {
             HDFC NetBanking
           </h1>
           <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => navigate('/transfer')}
+              className="text-sm text-gray-300 hover:text-gold
+                         transition-colors duration-150"
+            >
+              Transfer
+            </button>
             <span className="text-sm text-gray-300">
               Welcome, {user?.username}
             </span>
@@ -107,9 +113,11 @@ const DashboardPage = () => {
 
         {/* Transactions section */}
         <section>
-          <h2 className="font-display text-2xl font-semibold text-navy mb-6">
-            Recent Transactions
-          </h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-display text-2xl font-semibold text-navy">
+              Recent Transactions
+            </h2>
+          </div>
 
           {/* Loading state */}
           {transactionsLoading && (
@@ -131,7 +139,7 @@ const DashboardPage = () => {
 
           {/* Empty state */}
           {!transactionsLoading && !transactionsError &&
-            transactions.length === 0 && (
+            recentTransactions.length === 0 && (
             <p className="text-sm text-text-muted">
               No transactions found.
             </p>
@@ -139,7 +147,7 @@ const DashboardPage = () => {
 
           {/* Transactions table */}
           {!transactionsLoading && !transactionsError &&
-            transactions.length > 0 && (
+            recentTransactions.length > 0 && (
             <div className="bg-surface rounded-xl shadow-card overflow-hidden">
               <table className="w-full">
                 <thead>
@@ -163,7 +171,7 @@ const DashboardPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((transaction) => (
+                  {recentTransactions.map((transaction) => (
                     <TransactionRow
                       key={transaction.id}
                       transaction={transaction}
@@ -171,30 +179,19 @@ const DashboardPage = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
 
-              {/* Pagination controls */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-between px-4 py-3
-                                border-t border-gray-100">
-                  <p className="text-xs text-text-muted">
-                    Page {currentPage + 1} of {totalPages}
-                  </p>
-                  <div className="flex gap-2">
-                    <Button
-                      label="Previous"
-                      onClick={goToPreviousPage}
-                      disabled={isFirstPage}
-                      variant="secondary"
-                    />
-                    <Button
-                      label="Next"
-                      onClick={goToNextPage}
-                      disabled={isLastPage}
-                      variant="secondary"
-                    />
-                  </div>
-                </div>
-              )}
+          {/* Link to full transaction history */}
+          {!transactionsLoading && !transactionsError && (
+            <div className="text-center mt-4">
+              <Link
+                to="/transactions"
+                className="text-sm text-navy font-medium hover:text-gold
+                           transition-colors duration-150"
+              >
+                View all transactions →
+              </Link>
             </div>
           )}
         </section>
