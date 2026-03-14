@@ -52,5 +52,6 @@ export interface Transaction {
   status: 'PENDING' | 'SUCCESS' | 'FAILED'
   type: 'INTERNAL_TRANSFER' | 'DEPOSIT' | 'WITHDRAWAL' | 'PAYSTACK_PAYMENT'
   reference: string
+  description?: string  // optional — not always present
   createdAt: string
 }
