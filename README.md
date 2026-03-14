@@ -48,7 +48,16 @@ npx vitest run
 - Shared components — InputField, Button (accessible, keyboard navigable)
 - 42 tests — all passing
 
-### 🔜 Sprint 2 — Dashboard
+### ✅ Sprint 2 — Dashboard (Complete)
+- Customer dashboard with accounts grid and recent transactions table
+- Account cards — account number, type, balance, status
+- Transaction table — type, reference, amount, date, status badge
+- Pagination — next/previous page controls
+- Role-based routing — CUSTOMER → dashboard, TELLER → teller portal, ADMIN → admin portal
+- Shared utilities — formatCurrency, formatDate, formatDateTime
+- TanStack Query hooks — useMyAccounts, useMyTransactions
+- 78 tests across 16 test files — all passing
+
 ### 🔜 Sprint 3 — Transfers & Transaction History
 ### 🔜 Sprint 4 — Currency Converter
 ### 🔜 Sprint 5 — Admin Panel
