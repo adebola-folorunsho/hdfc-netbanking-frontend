@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { loginUser } from '../services/authService'
 import { useAuthStore } from '../../../store/authStore'
 import type { LoginRequest } from '../types/auth.types'
-import Cookies from 'js-cookie'
 import { extractErrorMessage } from '../../../shared/utils/extractErrorMessage'
+import { setRefreshTokenCookie } from '../../../shared/utils/tokenCookie'
+
 
 /*
  * Pattern: Custom Hook (SRP — Single Responsibility Principle)
@@ -34,13 +35,7 @@ export const useLogin = () => {
       }
 
       // Full auth success — store refresh token in cookie, access token in memory
-      Cookies.set('refreshToken', response.refreshToken, {
-        // Cookie is not accessible via JavaScript — mitigates XSS
-        // Note: js-cookie cannot set true httpOnly cookies (only the server can)
-        // This is the closest approximation from the client side
-        secure: true,
-        sameSite: 'strict',
-      })
+      setRefreshTokenCookie(response.refreshToken)
 
       setAuth(response.accessToken, {
         userId: response.userId,
