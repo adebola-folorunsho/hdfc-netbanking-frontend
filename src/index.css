@@ -1,3 +1,102 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-navy: #0B1C3D;
+    --color-navy-light: #162d5e;
+    --color-gold: #C9A84C;
+    --color-gold-light: #e0c97a;
+    --color-surface: #FFFFFF;
+    --color-background: #F4F6FA;
+    --color-text-primary: #0B1C3D;
+    --color-text-secondary: #4A5568;
+    --color-text-muted: #A0AEC0;
+    --color-error: #C53030;
+    --color-success: #276749;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-body);
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    /* Prevents layout shift when scrollbar appears */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-navy);
+  }
+
+  /* Smooth focus ring for accessibility — visible on keyboard nav */
+  *:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .text-navy {
+    color: var(--color-navy);
+  }
+
+  .text-gold {
+    color: var(--color-gold);
+  }
+
+  .bg-navy {
+    background-color: var(--color-navy);
+  }
+
+  .bg-gold {
+    background-color: var(--color-gold);
+  }
+
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-app {
+    background-color: var(--color-background);
+  }
+
+  /* Page entry animation — subtle fade and lift on mount */
+  .animate-enter {
+    animation: enter 0.4s ease-out forwards;
+  }
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
