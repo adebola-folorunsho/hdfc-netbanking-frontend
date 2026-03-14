@@ -58,7 +58,15 @@ npx vitest run
 - TanStack Query hooks — useMyAccounts, useMyTransactions
 - 78 tests across 16 test files — all passing
 
-### 🔜 Sprint 3 — Transfers & Transaction History
+### ✅ Sprint 3 — Transfers & Transaction History (Complete)
+- Transfer form — sender account dropdown, receiver account number with format validation
+- Amount validation — minimum ₦1.00, HDFC + 10 digit account number format
+- Transfer hook — invalidates accounts cache on success so balances refresh automatically
+- Transaction history page — full paginated history with account selector and type filter
+- Client-side type filtering — All Types, Internal Transfer, Deposit, Withdrawal, Paystack Payment
+- Dashboard updated — shows 5 most recent transactions with link to full history
+- 105 tests across 21 test files — all passing
+
 ### 🔜 Sprint 4 — Currency Converter
 ### 🔜 Sprint 5 — Admin Panel
 ### 🔜 Sprint 6 — Profile & Settings
