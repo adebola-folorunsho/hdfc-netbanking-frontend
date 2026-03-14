@@ -3,6 +3,7 @@ import { loginUser } from '../services/authService'
 import { useAuthStore } from '../../../store/authStore'
 import type { LoginRequest } from '../types/auth.types'
 import Cookies from 'js-cookie'
+import { extractErrorMessage } from '../../../shared/utils/extractErrorMessage'
 
 /*
  * Pattern: Custom Hook (SRP — Single Responsibility Principle)
@@ -47,12 +48,7 @@ export const useLogin = () => {
         role: response.role,
       })
     } catch (error: unknown) {
-      const err = error as {
-        response?: { data?: { message?: string } }
-      }
-      setErrorMessage(
-        err.response?.data?.message ?? 'Login failed. Please try again.'
-      )
+      setErrorMessage(extractErrorMessage(error, 'Login failed. Please try again.'))
     } finally {
       setIsLoading(false)
     }
