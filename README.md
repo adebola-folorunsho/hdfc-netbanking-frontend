@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# HDFC NetBanking — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-grade React frontend for the HDFC NetBanking microservices platform.
+Built with Vite, React, TypeScript, TailwindCSS, and tested with Vitest.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework** — React 18 + TypeScript
+- **Build Tool** — Vite
+- **Styling** — TailwindCSS v3
+- **State Management** — Zustand (client), TanStack Query (server)
+- **HTTP Client** — Axios
+- **Routing** — React Router v6
+- **Testing** — Vitest + React Testing Library
 
-## React Compiler
+## Architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Package-by-feature structure. Each feature owns its components, hooks,
+services, types, and tests. Shared utilities and components live in `src/shared/`.
 
-## Expanding the ESLint configuration
+## Backend
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This frontend connects to two backend entry points:
+- **API Gateway** — port 8080 (customer-facing traffic)
+- **Admin Gateway** — port 8090 (admin-only traffic)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Backend repository: [hdfc-netbanking-backend](https://github.com/adebola-folorunsho/hdfc-netbanking-backend)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running Tests
+```bash
+npx vitest run
 ```
+
+## Sprint Progress
+
+### ✅ Sprint 1 — Authentication (Complete)
+- Login page with username/email and password
+- Registration page with full profile fields
+- Two-factor authentication (TOTP) screen
+- Silent refresh — restores auth state on page refresh via refresh token cookie
+- Protected route guard with role-based access scaffold
+- Shared components — InputField, Button (accessible, keyboard navigable)
+- 42 tests — all passing
+
+### 🔜 Sprint 2 — Dashboard
+### 🔜 Sprint 3 — Transfers & Transaction History
+### 🔜 Sprint 4 — Currency Converter
+### 🔜 Sprint 5 — Admin Panel
+### 🔜 Sprint 6 — Profile & Settings
+
+## Auth Architecture
+
+- Access token — memory only (Zustand store, lost on page refresh)
+- Refresh token — js-cookie (restored on page load via silent refresh)
+- Roles — `ROLE_CUSTOMER`, `ROLE_TELLER`, `ROLE_ADMIN`
+- 2FA — TOTP via Google Authenticator or equivalent
