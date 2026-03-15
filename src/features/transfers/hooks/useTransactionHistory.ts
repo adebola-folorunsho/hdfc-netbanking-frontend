@@ -3,8 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchTransactionsByAccount } from '../services/transferService'
 import type { Transaction } from '../../dashboard/types/dashboard.types'
 
+// accountId is a Long on backend — typed as number on frontend
 interface UseTransactionHistoryProps {
-  accountId: string
+  accountId: number
   typeFilter?: Transaction['type']
 }
 
@@ -12,7 +13,7 @@ interface UseTransactionHistoryProps {
 type TransactionTypeFilter = Transaction['type'] | undefined
 
 export const transactionHistoryQueryKey = (
-  accountId: string,
+  accountId: number,
   page: number,
   typeFilter?: Transaction['type']
 ) => ['transaction-history', accountId, page, typeFilter] as const

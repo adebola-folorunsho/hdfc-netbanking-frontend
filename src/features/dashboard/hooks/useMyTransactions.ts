@@ -11,13 +11,14 @@ export const myTransactionsQueryKey = (page: number) =>
  * Pattern: Custom Hook (SRP — Single Responsibility Principle)
  * This hook owns the transactions fetching and pagination logic.
  * It exposes a clean interface — components never touch page state directly.
+ * Default page size is 20 — matches backend default explicitly.
  */
 export const useMyTransactions = (initialPage: number = 0) => {
   const [currentPage, setCurrentPage] = useState(initialPage)
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: myTransactionsQueryKey(currentPage),
-    queryFn: () => fetchMyTransactions(currentPage),
+    queryFn: () => fetchMyTransactions(currentPage, 20),
   })
 
   const goToNextPage = () => {

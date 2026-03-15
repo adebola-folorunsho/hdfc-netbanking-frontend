@@ -8,11 +8,11 @@ import type { Account } from '../../dashboard/types/dashboard.types'
 
 const mockAccounts: Account[] = [
   {
-    id: 'account-uuid-1',
-    userId: '10',
+    id: 1,
+    userId: 10,
     accountNumber: 'HDFC1234567890',
     accountType: 'SAVINGS',
-    balance: '50000.0000',
+    balance: '50000.00',
     currency: 'NGN',
     status: 'ACTIVE',
     createdAt: '2026-01-01T00:00:00Z',

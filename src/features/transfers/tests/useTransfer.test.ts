@@ -19,13 +19,13 @@ const createWrapper = () => {
 
 const mockTransferResponse = {
   id: '1',
-  senderAccountId: 'sender-uuid',
-  receiverAccountId: 'receiver-uuid',
-  amount: '1000.0000',
+  senderAccountId: '10',
+  receiverAccountId: '20',
+  amount: '1000.00',
   currency: 'NGN' as const,
   status: 'SUCCESS' as const,
   type: 'INTERNAL_TRANSFER' as const,
-  reference: 'TXN-abc123',
+  reference: 'TXN-550e8400-e29b-41d4-a716-446655440000',
   createdAt: '2026-03-14T13:00:00Z',
 }
 
@@ -52,18 +52,20 @@ describe('useTransfer', () => {
 
     await act(async () => {
       await result.current.transfer({
-        senderAccountId: 'sender-uuid',
-        receiverAccountId: 'receiver-uuid',
-        amount: 1000,
+        sourceAccountId: 10,
+        destinationAccountId: 20,
+        amount: '1000.00',
         currency: 'NGN',
+        reference: 'TXN-550e8400-e29b-41d4-a716-446655440000',
       })
     })
 
     expect(transferService.initiateTransfer).toHaveBeenCalledWith({
-      senderAccountId: 'sender-uuid',
-      receiverAccountId: 'receiver-uuid',
-      amount: 1000,
+      sourceAccountId: 10,
+      destinationAccountId: 20,
+      amount: '1000.00',
       currency: 'NGN',
+      reference: 'TXN-550e8400-e29b-41d4-a716-446655440000',
     })
   })
 
@@ -78,10 +80,11 @@ describe('useTransfer', () => {
 
     await act(async () => {
       await result.current.transfer({
-        senderAccountId: 'sender-uuid',
-        receiverAccountId: 'receiver-uuid',
-        amount: 1000,
+        sourceAccountId: 10,
+        destinationAccountId: 20,
+        amount: '1000.00',
         currency: 'NGN',
+        reference: 'TXN-550e8400-e29b-41d4-a716-446655440000',
       })
     })
 
@@ -100,10 +103,11 @@ describe('useTransfer', () => {
 
     await act(async () => {
       await result.current.transfer({
-        senderAccountId: 'sender-uuid',
-        receiverAccountId: 'receiver-uuid',
-        amount: 1000,
+        sourceAccountId: 10,
+        destinationAccountId: 20,
+        amount: '1000.00',
         currency: 'NGN',
+        reference: 'TXN-550e8400-e29b-41d4-a716-446655440000',
       })
     })
 
@@ -121,10 +125,11 @@ describe('useTransfer', () => {
 
     await act(async () => {
       await result.current.transfer({
-        senderAccountId: 'sender-uuid',
-        receiverAccountId: 'receiver-uuid',
-        amount: 1000,
+        sourceAccountId: 10,
+        destinationAccountId: 20,
+        amount: '1000.00',
         currency: 'NGN',
+        reference: 'TXN-550e8400-e29b-41d4-a716-446655440000',
       })
     })
 
