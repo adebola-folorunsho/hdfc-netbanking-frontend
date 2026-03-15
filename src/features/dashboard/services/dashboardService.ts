@@ -25,7 +25,7 @@ export const fetchMyAccounts = async (): Promise<Account[]> => {
 // GET /api/v1/accounts/{id}/balance
 // Returns the current balance for a specific account
 export const fetchAccountBalance = async (
-  accountId: string
+  accountId: number
 ): Promise<AccountBalance> => {
   const response = await apiClient.get<ApiResponse<AccountBalance>>(
     `/api/v1/accounts/${accountId}/balance`
@@ -41,13 +41,14 @@ export const fetchAccountBalance = async (
 // GET /api/v1/transactions/my-transactions
 // Returns paginated transactions for the authenticated customer
 // page is 0-indexed — Spring Boot pagination convention
+// Explicit size=20 and sort=createdAt,desc to match backend defaults
 export const fetchMyTransactions = async (
   page: number = 0,
-  size: number = 10
+  size: number = 20
 ): Promise<PageResponse<Transaction>> => {
   const response = await apiClient.get<ApiResponse<PageResponse<Transaction>>>(
     '/api/v1/transactions/my-transactions',
-    { params: { page, size } }
+    { params: { page, size, sort: 'createdAt,desc' } }
   )
 
   if (!response.data.data) {

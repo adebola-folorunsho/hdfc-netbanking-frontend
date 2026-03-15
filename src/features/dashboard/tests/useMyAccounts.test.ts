@@ -25,11 +25,11 @@ const createWrapper = () => {
 
 const mockAccounts = [
   {
-    id: '1',
-    userId: '10',
+    id: 1,
+    userId: 10,
     accountNumber: 'HDFC1234567890',
     accountType: 'SAVINGS' as const,
-    balance: '50000.0000',
+    balance: '50000.00',
     currency: 'NGN' as const,
     status: 'ACTIVE' as const,
     createdAt: '2026-01-01T00:00:00Z',

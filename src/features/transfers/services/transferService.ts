@@ -28,14 +28,15 @@ export const initiateTransfer = async (
 
 // GET /api/v1/transactions/account/{accountId}
 // Returns paginated transactions for a specific account
+// Explicit size=20 and sort=createdAt,desc to match backend defaults
 export const fetchTransactionsByAccount = async (
-  accountId: string,
+  accountId: number,
   page: number = 0,
-  size: number = 10
+  size: number = 20
 ): Promise<PageResponse<Transaction>> => {
   const response = await apiClient.get<ApiResponse<PageResponse<Transaction>>>(
     `/api/v1/transactions/account/${accountId}`,
-    { params: { page, size } }
+    { params: { page, size, sort: 'createdAt,desc' } }
   )
 
   if (!response.data.data) {

@@ -11,18 +11,18 @@ vi.mock('../../dashboard/hooks/useMyAccounts')
 const mockUseMyAccounts = (overrides = {}) => {
   vi.mocked(useMyAccountsHook.useMyAccounts).mockReturnValue({
     accounts: [
-      {
-        id: 'account-uuid-1',
-        userId: '10',
-        accountNumber: 'HDFC1234567890',
-        accountType: 'SAVINGS' as const,
-        balance: '50000.0000',
-        currency: 'NGN' as const,
-        status: 'ACTIVE' as const,
-        createdAt: '2026-01-01T00:00:00Z',
-        updatedAt: '2026-01-01T00:00:00Z',
-      },
-    ],
+        {
+          id: 1,
+          userId: 10,
+          accountNumber: 'HDFC1234567890',
+          accountType: 'SAVINGS' as const,
+          balance: '50000.00',
+          currency: 'NGN' as const,
+          status: 'ACTIVE' as const,
+          createdAt: '2026-01-01T00:00:00Z',
+          updatedAt: '2026-01-01T00:00:00Z',
+        },
+      ],
     isLoading: false,
     isError: false,
     isSuccess: true,

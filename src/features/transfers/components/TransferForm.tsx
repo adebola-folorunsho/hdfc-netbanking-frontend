@@ -23,10 +23,10 @@ const MINIMUM_TRANSFER_AMOUNT = 1.00
 const TransferForm = ({ accounts, onSuccess }: TransferFormProps) => {
   const { transfer, isLoading, isSuccess, errorMessage, reset } = useTransfer()
 
-  const [senderAccountId, setSenderAccountId] = useState(
-    accounts[0]?.id ?? ''
+  const [sourceAccountId, setSourceAccountId] = useState(
+    accounts[0]?.id ?? 0
   )
-  const [receiverAccountNumber, setReceiverAccountNumber] = useState('')
+  const [destinationAccountNumber, setDestinationAccountNumber] = useState('')
   const [amount, setAmount] = useState('')
   const [description, setDescription] = useState('')
   const [errors, setErrors] = useState<TransferFormErrors>({})
@@ -40,10 +40,10 @@ const TransferForm = ({ accounts, onSuccess }: TransferFormProps) => {
   const validate = (): boolean => {
     const newErrors: TransferFormErrors = {}
 
-    if (!receiverAccountNumber.trim()) {
-      newErrors.receiverAccountId = 'Receiver account number is required'
-    } else if (!ACCOUNT_NUMBER_REGEX.test(receiverAccountNumber.trim())) {
-      newErrors.receiverAccountId =
+    if (!destinationAccountNumber.trim()) {
+      newErrors.destinationAccountId = 'Receiver account number is required'
+    } else if (!ACCOUNT_NUMBER_REGEX.test(destinationAccountNumber.trim())) {
+      newErrors.destinationAccountId =
         'Account number must start with HDFC followed by 10 digits'
     }
 
@@ -56,18 +56,24 @@ const TransferForm = ({ accounts, onSuccess }: TransferFormProps) => {
     }
 
     setErrors(newErrors)
-    // Returns true only when there are no errors
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async () => {
     if (!validate()) return
 
+    // Generate a unique idempotency reference for this transfer request
+    const reference = `TXN-${crypto.randomUUID()}`
+
     await transfer({
-      senderAccountId,
-      receiverAccountId: receiverAccountNumber.trim(),
-      amount: parseFloat(amount),
+      sourceAccountId,
+      // Backend resolves account by account number — sent as destinationAccountId
+      // The backend accepts account number string and resolves to Long ID
+      destinationAccountId: destinationAccountNumber.trim() as unknown as number,
+      // Amount sent as string — backend expects String for BigDecimal parsing
+      amount: parseFloat(amount).toFixed(2),
       currency: 'NGN',
+      reference,
       description: description.trim() || undefined,
     })
   }
@@ -100,8 +106,8 @@ const TransferForm = ({ accounts, onSuccess }: TransferFormProps) => {
           </label>
           <select
             id="senderAccountId"
-            value={senderAccountId}
-            onChange={(e) => setSenderAccountId(e.target.value)}
+            value={sourceAccountId}
+            onChange={(e) => setSourceAccountId(Number(e.target.value))}
             disabled={isLoading}
             className="w-full px-4 py-2.5 rounded-input border border-gray-200
                        text-sm font-body bg-surface text-navy
@@ -122,10 +128,10 @@ const TransferForm = ({ accounts, onSuccess }: TransferFormProps) => {
           id="receiverAccountNumber"
           label="Receiver Account Number"
           type="text"
-          value={receiverAccountNumber}
-          onChange={(e) => setReceiverAccountNumber(e.target.value)}
+          value={destinationAccountNumber}
+          onChange={(e) => setDestinationAccountNumber(e.target.value)}
           placeholder="HDFC0987654321"
-          error={errors.receiverAccountId}
+          error={errors.destinationAccountId}
           disabled={isLoading}
           autoComplete="off"
         />

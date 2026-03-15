@@ -30,10 +30,10 @@ const TransactionHistoryPage = () => {
   const { user, clearAuth } = useAuthStore()
 
   const { accounts, isLoading: accountsLoading } = useMyAccounts()
-  const [selectedAccountId, setSelectedAccountId] = useState<string>('')
+  const [selectedAccountId, setSelectedAccountId] = useState<number | null>(null)
 
   // Use the first account by default once accounts load
-  const effectiveAccountId = selectedAccountId || accounts[0]?.id || ''
+  const effectiveAccountId = selectedAccountId ?? accounts[0]?.id ?? 0
 
   const {
     transactions,
@@ -107,7 +107,7 @@ const TransactionHistoryPage = () => {
             <select
               id="selectedAccount"
               value={effectiveAccountId}
-              onChange={(e) => setSelectedAccountId(e.target.value)}
+              onChange={(e) => setSelectedAccountId(Number(e.target.value))}
               disabled={accountsLoading}
               className="w-full px-4 py-2.5 rounded-input border border-gray-200
                          text-sm font-body bg-surface text-navy

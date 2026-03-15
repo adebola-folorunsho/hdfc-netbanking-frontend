@@ -23,7 +23,7 @@ const mockPageResponse = {
       id: '1',
       senderAccountId: '10',
       receiverAccountId: '20',
-      amount: '5000.0000',
+      amount: '5000.00',
       currency: 'NGN' as const,
       status: 'SUCCESS' as const,
       type: 'INTERNAL_TRANSFER' as const,
@@ -31,7 +31,7 @@ const mockPageResponse = {
       createdAt: '2026-03-14T13:00:00Z',
     },
   ],
-  pageable: { pageNumber: 0, pageSize: 10 },
+  pageable: { pageNumber: 0, pageSize: 20 },
   totalElements: 1,
   totalPages: 1,
   last: true,
@@ -49,7 +49,7 @@ describe('useTransactionHistory', () => {
     )
 
     const { result } = renderHook(
-      () => useTransactionHistory({ accountId: 'account-uuid' }),
+      () => useTransactionHistory({ accountId: 1 }),
       { wrapper: createWrapper() }
     )
 
@@ -63,7 +63,7 @@ describe('useTransactionHistory', () => {
     )
 
     const { result } = renderHook(
-      () => useTransactionHistory({ accountId: 'account-uuid' }),
+      () => useTransactionHistory({ accountId: 1 }),
       { wrapper: createWrapper() }
     )
 
@@ -76,7 +76,7 @@ describe('useTransactionHistory', () => {
     ).mockRejectedValueOnce(new Error('Network error'))
 
     const { result } = renderHook(
-      () => useTransactionHistory({ accountId: 'account-uuid' }),
+      () => useTransactionHistory({ accountId: 1 }),
       { wrapper: createWrapper() }
     )
 
@@ -89,7 +89,7 @@ describe('useTransactionHistory', () => {
     )
 
     const { result } = renderHook(
-      () => useTransactionHistory({ accountId: 'account-uuid' }),
+      () => useTransactionHistory({ accountId: 1 }),
       { wrapper: createWrapper() }
     )
 
@@ -107,7 +107,7 @@ describe('useTransactionHistory', () => {
     const { result } = renderHook(
       () =>
         useTransactionHistory({
-          accountId: 'account-uuid',
+          accountId: 1,
           typeFilter: 'INTERNAL_TRANSFER',
         }),
       { wrapper: createWrapper() }
@@ -123,10 +123,7 @@ describe('useTransactionHistory', () => {
     )
 
     const { result } = renderHook(
-      () =>
-        useTransactionHistory({
-          accountId: 'account-uuid',
-        }),
+      () => useTransactionHistory({ accountId: 1 }),
       { wrapper: createWrapper() }
     )
 
