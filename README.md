@@ -76,7 +76,16 @@ npx vitest run
 - Router updated — /currency route protected under ROLE_CUSTOMER
 - 128 tests across 25 test files — all passing
 
-### 🔜 Sprint 5 — Admin Panel
+### ✅ Sprint 5 — Admin Panel (Complete)
+- Dedicated Axios instance for Admin Gateway (port 8090) — admin and customer traffic never mixed
+- Admin layout shell — top header with brand and sign out, sidebar navigation between admin pages
+- Admin dashboard — landing page with navigation cards to audit logs and statements
+- Audit logs page — paginated table with live event type filter (All, Transaction Created, Fraud Alert)
+- Strategy pattern — data source switches at runtime based on active filter, no conditional rendering logic in the component
+- Statements page — search by user ID with input validation and paginated results
+- All admin routes protected under ROLE_ADMIN — same JWT as customer login, enforced at Admin Gateway
+- 183 tests across 33 test files — all passing
+
 ### 🔜 Sprint 6 — Profile & Settings
 
 ## Auth Architecture
