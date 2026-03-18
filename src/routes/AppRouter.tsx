@@ -8,26 +8,19 @@ import DashboardPage from '../features/dashboard/components/DashboardPage'
 import TransferPage from '../features/transfers/components/TransferPage'
 import TransactionHistoryPage from '../features/transfers/components/TransactionHistoryPage'
 import CurrencyConverterPage from '../features/currency/components/CurrencyConverterPage'
+import AdminLayout from '../features/admin/components/AdminLayout'
+import AdminDashboardPage from '../features/admin/components/AdminDashboardPage'
+import AuditLogsPage from '../features/admin/components/AuditLogsPage'
+import StatementsPage from '../features/admin/components/StatementsPage'
 
-// Placeholder pages for roles not yet built — replaced in Sprint 5
+// Placeholder page for teller role — replaced in a future sprint
 const TellerPortalPage = () => (
   <div className="min-h-screen bg-app flex items-center justify-center">
     <div className="text-center">
       <h1 className="font-display text-2xl font-semibold text-navy mb-2">
         Teller Portal
       </h1>
-      <p className="text-text-secondary text-sm">Coming soon — Sprint 5</p>
-    </div>
-  </div>
-)
-
-const AdminPortalPage = () => (
-  <div className="min-h-screen bg-app flex items-center justify-center">
-    <div className="text-center">
-      <h1 className="font-display text-2xl font-semibold text-navy mb-2">
-        Admin Portal
-      </h1>
-      <p className="text-text-secondary text-sm">Coming soon — Sprint 5</p>
+      <p className="text-text-secondary text-sm">Coming soon</p>
     </div>
   </div>
 )
@@ -62,6 +55,8 @@ const NotFoundPage = () => (
  * Pattern: Composition Root (SRP — Single Responsibility Principle)
  * This component owns the route tree and nothing else.
  * All route guards, redirects, and role-based routing are configured here.
+ *
+ * OCP — new routes are added here without modifying existing route definitions.
  */
 const AppRouter = () => {
   const { isResolved } = useSilentRefresh()
@@ -102,7 +97,6 @@ const AppRouter = () => {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/transactions"
           element={
@@ -132,12 +126,34 @@ const AppRouter = () => {
           }
         />
 
-        {/* Admin protected routes */}
+        {/* Admin protected routes — nested under /admin with shared AdminLayout */}
         <Route
           path="/admin"
           element={
             <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
-              <AdminPortalPage />
+              <AdminLayout>
+                <AdminDashboardPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/audit-logs"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+              <AdminLayout>
+                <AuditLogsPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/statements"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+              <AdminLayout>
+                <StatementsPage />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
