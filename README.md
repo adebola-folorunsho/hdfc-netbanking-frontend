@@ -67,7 +67,15 @@ npx vitest run
 - Dashboard updated — shows 5 most recent transactions with link to full history
 - 105 tests across 21 test files — all passing
 
-### 🔜 Sprint 4 — Currency Converter
+### ✅ Sprint 4 — Currency Converter (Complete)
+- Currency converter page — amount input, from/to currency selectors, swap button, and live converted result
+- Same-currency shortcut — API call skipped entirely when from and to currencies match
+- Exchange rate widget — compact NGN rate display embedded on the dashboard with live currency selector
+- Supported currencies cached for 10 minutes — API not hammered on every render
+- Dashboard updated — exchange rate widget integrated, Currency nav link added to header
+- Router updated — /currency route protected under ROLE_CUSTOMER
+- 128 tests across 25 test files — all passing
+
 ### 🔜 Sprint 5 — Admin Panel
 ### 🔜 Sprint 6 — Profile & Settings
 
