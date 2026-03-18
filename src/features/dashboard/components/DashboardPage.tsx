@@ -5,6 +5,7 @@ import { useMyTransactions } from '../hooks/useMyTransactions'
 import AccountCard from './AccountCard'
 import TransactionRow from './TransactionRow'
 import Button from '../../../shared/components/Button'
+import CurrencyRateWidget from '../../currency/components/CurrencyRateWidget'
 
 /*
  * Pattern: Container Component (SRP — Single Responsibility Principle)
@@ -55,6 +56,14 @@ const DashboardPage = () => {
                          transition-colors duration-150"
             >
               Transfer
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/currency')}
+              className="text-sm text-gray-300 hover:text-gold
+                         transition-colors duration-150"
+            >
+              Currency
             </button>
             <span className="text-sm text-gray-300">
               Welcome, {user?.username}
@@ -109,6 +118,13 @@ const DashboardPage = () => {
               ))}
             </div>
           )}
+        </section>
+
+        {/* Currency rate widget section */}
+        <section className="mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <CurrencyRateWidget />
+          </div>
         </section>
 
         {/* Transactions section */}

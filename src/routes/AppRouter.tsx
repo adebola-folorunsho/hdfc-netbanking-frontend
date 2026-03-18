@@ -7,6 +7,7 @@ import TwoFactorPage from '../features/auth/components/TwoFactorPage'
 import DashboardPage from '../features/dashboard/components/DashboardPage'
 import TransferPage from '../features/transfers/components/TransferPage'
 import TransactionHistoryPage from '../features/transfers/components/TransactionHistoryPage'
+import CurrencyConverterPage from '../features/currency/components/CurrencyConverterPage'
 
 // Placeholder pages for roles not yet built — replaced in Sprint 5
 const TellerPortalPage = () => (
@@ -107,6 +108,16 @@ const AppRouter = () => {
           element={
             <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
               <TransactionHistoryPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Currency converter route */}
+        <Route
+          path="/currency"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
+              <CurrencyConverterPage />
             </ProtectedRoute>
           }
         />

@@ -94,7 +94,7 @@ describe('DashboardPage', () => {
   it('should show loading state while accounts are fetching', () => {
     mockUseMyAccounts({ isLoading: true, isSuccess: false })
     renderDashboard()
-    expect(screen.getByText(/loading/i)).toBeInTheDocument()
+    expect(screen.getByText('Loading accounts...')).toBeInTheDocument()
   })
 
   it('should show error state when accounts fetch fails', () => {
