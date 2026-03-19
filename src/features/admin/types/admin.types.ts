@@ -58,3 +58,99 @@ export interface AuditLogQueryParams {
   page: number
   size: number
 }
+
+/**
+ * User profile — matches UserProfileResponse DTO from User Service.
+ * roles is string[] with values CUSTOMER, TELLER, ADMIN — no ROLE_ prefix.
+ */
+export interface UserProfile {
+  id: number
+  fullName: string
+  email: string
+  phoneNumber: string
+  address: string
+  roles: string[]
+  isEnabled: boolean
+  isKycVerified: boolean
+  isTwoFactorEnabled: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Account response — matches AccountResponse DTO from Account Service.
+ * balance is string — consistent with Sprint 2/3 frontend convention.
+ * Never do arithmetic on balance in the frontend.
+ */
+export interface AdminAccountResponse {
+  id: number
+  userId: number
+  accountNumber: string
+  accountType: 'SAVINGS' | 'CURRENT' | 'FIXED_DEPOSIT'
+  accountStatus: 'ACTIVE' | 'INACTIVE' | 'CLOSED' | 'FROZEN'
+  // Balance treated as string — never do arithmetic on monetary values in JS
+  balance: string
+  currencyCode: string
+  minimumBalance: string
+  interestRate: string
+  maturityDate: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Transaction response — matches TransactionResponse DTO from Transaction Service.
+ * All monetary fields treated as string — never do arithmetic on monetary values in JS.
+ */
+export interface AdminTransactionResponse {
+  id: number
+  userId: number
+  transactionReference: string
+  transactionType: 'INTERNAL_TRANSFER' | 'PAYSTACK_PAYMENT' | 'DEPOSIT' | 'WITHDRAWAL'
+  status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'REVERSED'
+  sourceAccountId: number
+  destinationAccountId: number
+  // All monetary fields treated as string — consistent with frontend convention
+  amount: string
+  currencyCode: string
+  convertedAmount: string | null
+  convertedCurrencyCode: string | null
+  exchangeRate: string | null
+  description: string | null
+  paystackReference: string | null
+  failureReason: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * Request body for PATCH /api/v1/accounts/{accountId}/status
+ */
+export interface UpdateAccountStatusRequest {
+  status: 'ACTIVE' | 'INACTIVE' | 'CLOSED' | 'FROZEN'
+  reason: string
+}
+
+/**
+ * Request body for POST /api/v1/transactions/deposit
+ * and POST /api/v1/transactions/withdrawal
+ * transactionReference is a client-generated idempotency key — TXN-${crypto.randomUUID()}
+ */
+export interface DepositWithdrawalRequest {
+  accountId: number
+  transactionType: 'DEPOSIT' | 'WITHDRAWAL'
+  // Amount sent as string — consistent with frontend convention
+  amount: string
+  currencyCode: string
+  description?: string
+  transactionReference: string
+}
+
+/**
+ * Request body for POST /api/v1/roles/{targetUserId}/assign
+ * and DELETE /api/v1/roles/{targetUserId}/revoke
+ * role values are CUSTOMER, TELLER, ADMIN — no ROLE_ prefix
+ */
+export interface RoleAssignmentRequest {
+  role: 'CUSTOMER' | 'TELLER' | 'ADMIN'
+}
