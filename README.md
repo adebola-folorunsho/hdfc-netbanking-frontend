@@ -77,14 +77,18 @@ npx vitest run
 - 128 tests across 25 test files — all passing
 
 ### ✅ Sprint 5 — Admin Panel (Complete)
-- Dedicated Axios instance for Admin Gateway (port 8090) — admin and customer traffic never mixed
-- Admin layout shell — top header with brand and sign out, sidebar navigation between admin pages
-- Admin dashboard — landing page with navigation cards to audit logs and statements
-- Audit logs page — paginated table with live event type filter (All, Transaction Created, Fraud Alert)
-- Strategy pattern — data source switches at runtime based on active filter, no conditional rendering logic in the component
-- Statements page — search by user ID with input validation and paginated results
-- All admin routes protected under ROLE_ADMIN — same JWT as customer login, enforced at Admin Gateway
-- 183 tests across 33 test files — all passing
+- `AdminLayout` — shared shell with sidebar navigation for all admin pages
+- `AdminDashboardPage` — landing page with navigation cards to all admin features
+- `AuditLogsPage` — paginated audit log table with TRANSACTION_CREATED / FRAUD_ALERT filter
+- `StatementsPage` — search by user ID, paginated monthly statements table
+- `UserLookupPage` — search by user ID, view profile, verify KYC, assign and revoke roles
+- `AccountManagementPage` — search by user ID, view accounts, inline status update form
+- `TransactionManagementPage` — reverse transactions, process manual deposits and withdrawals
+- Admin services — `adminService`, `adminUserService`, `adminAccountService`, `adminTransactionService`
+- Admin hooks — `useAuditLogs`, `useAuditLogById`, `useAuditLogsByType`, `useStatementsByUser`, `useUserLookup`, `useAccountManagement`, `useTransactionManagement`
+- Audit and Scheduler endpoints via Admin Gateway (port 8090)
+- User, Account, and Transaction endpoints via API Gateway (port 8080) with role enforcement
+- 223 tests across 39 test files — all passing
 
 ### 🔜 Sprint 6 — Profile & Settings
 
