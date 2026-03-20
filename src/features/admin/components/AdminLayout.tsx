@@ -86,6 +86,15 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             <NavLink to="/admin/statements" className={navLinkClass}>
               Statements
             </NavLink>
+            <NavLink to="/admin/user-lookup" className={navLinkClass}>
+              User Lookup
+            </NavLink>
+            <NavLink to="/admin/account-management" className={navLinkClass}>
+              Accounts
+            </NavLink>
+            <NavLink to="/admin/transaction-management" className={navLinkClass}>
+              Transactions
+            </NavLink>
           </div>
         </nav>
 
