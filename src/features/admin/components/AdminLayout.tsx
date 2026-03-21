@@ -60,11 +60,21 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               Admin Panel
             </p>
           </div>
-          <Button
-            label="Sign Out"
-            onClick={handleSignOut}
-            variant="secondary"
-          />
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => navigate('/profile')}
+              className="text-sm text-gray-300 hover:text-gold
+                         transition-colors duration-150"
+            >
+              Profile
+            </button>
+            <Button
+              label="Sign Out"
+              onClick={handleSignOut}
+              variant="secondary"
+            />
+          </div>
         </div>
       </header>
 

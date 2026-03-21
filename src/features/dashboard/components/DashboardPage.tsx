@@ -65,6 +65,14 @@ const DashboardPage = () => {
             >
               Currency
             </button>
+            <button
+              type="button"
+              onClick={() => navigate('/profile')}
+              className="text-sm text-gray-300 hover:text-gold
+                         transition-colors duration-150"
+            >
+              Profile
+            </button>
             <span className="text-sm text-gray-300">
               Welcome, {user?.username}
             </span>
