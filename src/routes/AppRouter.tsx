@@ -12,6 +12,9 @@ import AdminLayout from '../features/admin/components/AdminLayout'
 import AdminDashboardPage from '../features/admin/components/AdminDashboardPage'
 import AuditLogsPage from '../features/admin/components/AuditLogsPage'
 import StatementsPage from '../features/admin/components/StatementsPage'
+import UserLookupPage from '../features/admin/components/UserLookupPage'
+import AccountManagementPage from '../features/admin/components/AccountManagementPage'
+import TransactionManagementPage from '../features/admin/components/TransactionManagementPage'
 
 // Placeholder page for teller role — replaced in a future sprint
 const TellerPortalPage = () => (
@@ -153,6 +156,36 @@ const AppRouter = () => {
             <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
               <AdminLayout>
                 <StatementsPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/user-lookup"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+              <AdminLayout>
+                <UserLookupPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/account-management"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+              <AdminLayout>
+                <AccountManagementPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/transaction-management"
+          element={
+            <ProtectedRoute allowedRoles={['ROLE_ADMIN']}>
+              <AdminLayout>
+                <TransactionManagementPage />
               </AdminLayout>
             </ProtectedRoute>
           }

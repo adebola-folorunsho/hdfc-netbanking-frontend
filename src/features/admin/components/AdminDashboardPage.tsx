@@ -70,6 +70,72 @@ const AdminDashboardPage = () => {
           </Link>
         </div>
 
+        {/* User Lookup card */}
+        <div className="bg-surface rounded-xl shadow-card p-6 border
+                        border-gray-100 flex flex-col gap-4">
+          <div>
+            <h3 className="font-display text-lg font-semibold text-navy mb-1">
+              User Lookup
+            </h3>
+            <p className="text-sm text-text-secondary">
+              Look up any user by ID. View profile, verify KYC status,
+              and manage role assignments.
+            </p>
+          </div>
+          <Link
+            to="/admin/user-lookup"
+            className="inline-flex items-center text-sm font-medium
+                       text-navy hover:text-gold transition-colors
+                       duration-150 mt-auto"
+          >
+            User Lookup →
+          </Link>
+        </div>
+
+        {/* Account Management card */}
+        <div className="bg-surface rounded-xl shadow-card p-6 border
+                        border-gray-100 flex flex-col gap-4">
+          <div>
+            <h3 className="font-display text-lg font-semibold text-navy mb-1">
+              Account Management
+            </h3>
+            <p className="text-sm text-text-secondary">
+              View all accounts for a user. Update account status —
+              activate, freeze, or close accounts.
+            </p>
+          </div>
+          <Link
+            to="/admin/account-management"
+            className="inline-flex items-center text-sm font-medium
+                       text-navy hover:text-gold transition-colors
+                       duration-150 mt-auto"
+          >
+            Manage Accounts →
+          </Link>
+        </div>
+
+        {/* Transaction Management card */}
+        <div className="bg-surface rounded-xl shadow-card p-6 border
+                        border-gray-100 flex flex-col gap-4">
+          <div>
+            <h3 className="font-display text-lg font-semibold text-navy mb-1">
+              Transaction Management
+            </h3>
+            <p className="text-sm text-text-secondary">
+              Reverse transactions, process manual deposits and withdrawals
+              on behalf of customers.
+            </p>
+          </div>
+          <Link
+            to="/admin/transaction-management"
+            className="inline-flex items-center text-sm font-medium
+                       text-navy hover:text-gold transition-colors
+                       duration-150 mt-auto"
+          >
+            Manage Transactions →
+          </Link>
+        </div>
+
       </div>
     </div>
   )
