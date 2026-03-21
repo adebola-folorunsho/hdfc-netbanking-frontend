@@ -90,7 +90,16 @@ npx vitest run
 - User, Account, and Transaction endpoints via API Gateway (port 8080) with role enforcement
 - 223 tests across 39 test files — all passing
 
-### 🔜 Sprint 6 — Profile & Settings
+### ✅ Sprint 6 — Profile & Settings (Complete)
+- `ProfilePage` — unified profile and settings page accessible by all three roles
+- Personal Information — read-only email and KYC status, editable full name, phone number, address
+- Two-Factor Authentication — enable flow with QR code display and manual secret entry, verify form, disable button
+- Change Password — current password, new password, confirm password (frontend validation), redirects to login on success
+- Profile service — `fetchMyProfile`, `updateMyProfile`, `changeMyPassword`, `initiateTwoFactorSetup`, `verifyTwoFactorSetup`, `disableTwoFactor`
+- Hooks — `useProfile`, `useUpdateProfile`, `useChangePassword`, `useTwoFactorSetup`
+- Router updated — `/profile` route added, accessible by ROLE_CUSTOMER, ROLE_TELLER, ROLE_ADMIN
+- Dashboard and Admin Panel updated — Profile nav link added to both
+- 253 tests across 44 test files — all passing
 
 ## Auth Architecture
 
