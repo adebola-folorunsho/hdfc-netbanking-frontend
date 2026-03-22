@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchMyTransactions } from '../services/dashboardService'
-import type { Transaction } from '../types/dashboard.types'
 
 // Query key factory — includes page so each page is cached independently
 export const myTransactionsQueryKey = (page: number) =>
