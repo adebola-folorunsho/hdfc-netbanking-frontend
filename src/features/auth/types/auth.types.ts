@@ -6,12 +6,12 @@ export interface LoginRequest {
 
 // Represents the body sent to POST /api/v1/auth/register
 export interface RegisterRequest {
-  firstName: string
-  lastName: string
+  fullName: string
   email: string
-  username: string
   password: string
   phoneNumber: string
+  address: string
+  governmentId: string
 }
 
 // Returned by the backend when 2FA is enabled on the account

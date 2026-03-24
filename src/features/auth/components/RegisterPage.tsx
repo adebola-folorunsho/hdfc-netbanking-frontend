@@ -16,9 +16,10 @@ const RegisterPage = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
-  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [address, setAddress] = useState('')
+  const [governmentId, setGovernmentId] = useState('')
   const [validationError, setValidationError] = useState<string | null>(null)
   const [validationField, setValidationField] = useState<string | null>(null)
 
@@ -42,11 +43,6 @@ const RegisterPage = () => {
       setValidationField('email')
       return
     }
-    if (!username.trim()) {
-      setValidationError('Username is required')
-      setValidationField('username')
-      return
-    }
     if (!password.trim()) {
       setValidationError('Password is required')
       setValidationField('password')
@@ -57,14 +53,24 @@ const RegisterPage = () => {
       setValidationField('phoneNumber')
       return
     }
+    if (!address.trim()) {
+      setValidationError('Address is required')
+      setValidationField('address')
+      return
+    }
+    if (!governmentId.trim()) {
+      setValidationError('Government ID is required')
+      setValidationField('governmentId')
+      return
+    }
 
     await register({
-      firstName,
-      lastName,
+      fullName: `${firstName} ${lastName}`,
       email,
-      username,
       password,
       phoneNumber,
+      address,
+      governmentId,
     })
   }
 
@@ -182,21 +188,6 @@ const RegisterPage = () => {
             />
 
             <InputField
-              id="username"
-              label="Username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="johndoe"
-              error={validationField === 'username'
-                ? validationError ?? undefined
-                : undefined
-              }
-              disabled={isLoading}
-              autoComplete="username"
-            />
-
-            <InputField
               id="password"
               label="Password"
               type="password"
@@ -224,6 +215,36 @@ const RegisterPage = () => {
               }
               disabled={isLoading}
               autoComplete="tel"
+            />
+
+            <InputField
+              id="address"
+              label="Address"
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="123 Main Street, Lagos"
+              error={validationField === 'address'
+                ? validationError ?? undefined
+                : undefined
+              }
+              disabled={isLoading}
+              autoComplete="street-address"
+            />
+
+            <InputField
+              id="governmentId"
+              label="Government ID"
+              type="text"
+              value={governmentId}
+              onChange={(e) => setGovernmentId(e.target.value)}
+              placeholder="NIN, BVN, Passport or ID number"
+              error={validationField === 'governmentId'
+                ? validationError ?? undefined
+                : undefined
+              }
+              disabled={isLoading}
+              autoComplete="off"
             />
 
             <Button

@@ -33,9 +33,10 @@ describe('RegisterPage', () => {
     expect(screen.getByLabelText('First Name')).toBeInTheDocument()
     expect(screen.getByLabelText('Last Name')).toBeInTheDocument()
     expect(screen.getByLabelText('Email Address')).toBeInTheDocument()
-    expect(screen.getByLabelText('Username')).toBeInTheDocument()
     expect(screen.getByLabelText('Password')).toBeInTheDocument()
     expect(screen.getByLabelText('Phone Number')).toBeInTheDocument()
+    expect(screen.getByLabelText('Address')).toBeInTheDocument()
+    expect(screen.getByLabelText('Government ID')).toBeInTheDocument()
     expect(
       screen.getByRole('button', { name: 'Create Account' })
     ).toBeInTheDocument()
@@ -68,18 +69,19 @@ describe('RegisterPage', () => {
     await user.type(screen.getByLabelText('First Name'), 'John')
     await user.type(screen.getByLabelText('Last Name'), 'Doe')
     await user.type(screen.getByLabelText('Email Address'), 'john@example.com')
-    await user.type(screen.getByLabelText('Username'), 'johndoe')
     await user.type(screen.getByLabelText('Password'), 'password123')
     await user.type(screen.getByLabelText('Phone Number'), '08012345678')
+    await user.type(screen.getByLabelText('Address'), '123 Main Street, Lagos')
+    await user.type(screen.getByLabelText('Government ID'), 'A12345678')
     await user.click(screen.getByRole('button', { name: 'Create Account' }))
 
     expect(mockRegister).toHaveBeenCalledWith({
-      firstName: 'John',
-      lastName: 'Doe',
+      fullName: 'John Doe',
       email: 'john@example.com',
-      username: 'johndoe',
       password: 'password123',
       phoneNumber: '08012345678',
+      address: '123 Main Street, Lagos',
+      governmentId: 'A12345678',
     })
   })
 
