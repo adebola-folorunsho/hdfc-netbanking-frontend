@@ -14,11 +14,11 @@ import type {
  * This keeps API knowledge in one place — if an endpoint changes, only this file changes.
  */
 
-// POST /api/v1/auth/register
+// POST /api/v1/users/register
 export const registerUser = async (
   data: RegisterRequest
 ): Promise<void> => {
-  await apiClient.post('/api/v1/auth/register', data)
+  await apiClient.post('/api/v1/users/register', data)
 }
 
 // POST /api/v1/auth/login
