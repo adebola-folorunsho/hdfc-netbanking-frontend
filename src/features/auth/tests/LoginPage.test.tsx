@@ -32,7 +32,7 @@ describe('LoginPage', () => {
       </MemoryRouter>
     )
 
-    expect(screen.getByLabelText('Username or Email')).toBeInTheDocument()
+    expect(screen.getByLabelText('Email Address')).toBeInTheDocument()
     expect(screen.getByLabelText('Password')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Sign In' })).toBeInTheDocument()
   })
@@ -47,7 +47,7 @@ describe('LoginPage', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Sign In' }))
-    expect(screen.getByText('Username or email is required')).toBeInTheDocument()
+    expect(screen.getByText('Email is required')).toBeInTheDocument()
   })
 
   it('should call login with correct values when form is submitted', async () => {
@@ -61,12 +61,12 @@ describe('LoginPage', () => {
       </MemoryRouter>
     )
 
-    await user.type(screen.getByLabelText('Username or Email'), 'testuser')
+    await user.type(screen.getByLabelText('Email Address'), 'test@example.com')    
     await user.type(screen.getByLabelText('Password'), 'password123')
     await user.click(screen.getByRole('button', { name: 'Sign In' }))
 
     expect(mockLogin).toHaveBeenCalledWith({
-      usernameOrEmail: 'testuser',
+      email: 'test@example.com',
       password: 'password123',
     })
   })

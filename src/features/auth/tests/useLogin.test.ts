@@ -3,9 +3,19 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useLogin } from '../hooks/useLogin'
 import * as authService from '../services/authService'
 
+
 vi.mock('../services/authService', () => ({
   loginUser: vi.fn(),
 }))
+
+vi.mock('../../../shared/utils/tokenCookie', () => ({
+  setRefreshTokenCookie: vi.fn(),
+}))
+
+// A minimal valid JWT whose payload is:
+// { sub: 'test@example.com', userId: '1', role: 'ROLE_CUSTOMER' }
+const MOCK_ACCESS_TOKEN =
+  'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwidXNlcklkIjoiMSIsInJvbGUiOiJST0xFX0NVU1RPTUVSIn0.signature'
 
 describe('useLogin', () => {
   beforeEach(() => {
@@ -19,25 +29,22 @@ describe('useLogin', () => {
 
   it('should call loginUser with correct credentials', async () => {
     vi.mocked(authService.loginUser).mockResolvedValueOnce({
-      requires2FA: false,
-      accessToken: 'test-access-token',
+      accessToken: MOCK_ACCESS_TOKEN,
       refreshToken: 'test-refresh-token',
-      role: 'ROLE_CUSTOMER',
-      userId: '1',
-      username: 'testuser',
+      tokenType: 'Bearer',
     })
 
     const { result } = renderHook(() => useLogin())
 
     await act(async () => {
       await result.current.login({
-        usernameOrEmail: 'testuser',
+        email: 'test@example.com',
         password: 'password123',
       })
     })
 
     expect(authService.loginUser).toHaveBeenCalledWith({
-      usernameOrEmail: 'testuser',
+      email: 'test@example.com',
       password: 'password123',
     })
   })
@@ -51,7 +58,7 @@ describe('useLogin', () => {
 
     await act(async () => {
       await result.current.login({
-        usernameOrEmail: 'wronguser',
+        email: 'wrong@example.com',
         password: 'wrongpassword',
       })
     })
@@ -69,7 +76,7 @@ describe('useLogin', () => {
 
     await act(async () => {
       await result.current.login({
-        usernameOrEmail: 'testuser',
+        email: 'test@example.com',
         password: 'password123',
       })
     })

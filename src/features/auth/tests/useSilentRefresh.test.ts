@@ -34,12 +34,10 @@ describe('useSilentRefresh', () => {
   it('should restore auth state when refresh token cookie exists and refresh succeeds', async () => {
     vi.mocked(tokenCookie.getRefreshTokenCookie).mockReturnValueOnce('valid-refresh-token')
     vi.mocked(authService.refreshAccessToken).mockResolvedValueOnce({
-      requires2FA: false,
-      accessToken: 'new-access-token',
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwidXNlcklkIjoiMSIsInJvbGUiOiJST0xFX0NVU1RPTUVSIn0.signature',
       refreshToken: 'new-refresh-token',
-      role: 'ROLE_CUSTOMER',
-      userId: '1',
-      username: 'testuser',
+      tokenType: 'Bearer',
     })
 
     const { result } = renderHook(() => useSilentRefresh())

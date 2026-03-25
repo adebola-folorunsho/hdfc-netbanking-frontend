@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode'
 import { useState } from 'react'
 import { validateTwoFactor } from '../services/authService'
 import { useAuthStore } from '../../../store/authStore'
@@ -33,10 +34,12 @@ export const useTwoFactor = ({ tempToken }: UseTwoFactorProps) => {
       // True httpOnly requires server-side Set-Cookie header. Deferred — see GitHub issue.
       setRefreshTokenCookie(response.refreshToken)
 
+      const decoded = jwtDecode<{ sub: string; userId: string; role: 'ROLE_CUSTOMER' | 'ROLE_TELLER' | 'ROLE_ADMIN' }>(response.accessToken)
+
       setAuth(response.accessToken, {
-        userId: response.userId,
-        username: response.username,
-        role: response.role,
+        userId: decoded.userId,
+        username: decoded.sub,
+        role: decoded.role,
       })
 
       setIsSuccess(true)

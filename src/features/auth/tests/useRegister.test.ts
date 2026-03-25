@@ -24,22 +24,22 @@ describe('useRegister', () => {
 
     await act(async () => {
       await result.current.register({
-        firstName: 'John',
-        lastName: 'Doe',
+        fullName: 'John Doe',
         email: 'john@example.com',
-        username: 'johndoe',
         password: 'password123',
         phoneNumber: '08012345678',
+        address: '123 Main Street, Lagos',
+        governmentId: 'A12345678',
       })
     })
 
     expect(authService.registerUser).toHaveBeenCalledWith({
-      firstName: 'John',
-      lastName: 'Doe',
+      fullName: 'John Doe',
       email: 'john@example.com',
-      username: 'johndoe',
       password: 'password123',
       phoneNumber: '08012345678',
+      address: '123 Main Street, Lagos',
+      governmentId: 'A12345678',
     })
   })
 
@@ -50,12 +50,12 @@ describe('useRegister', () => {
 
     await act(async () => {
       await result.current.register({
-        firstName: 'John',
-        lastName: 'Doe',
+        fullName: 'John Doe',
         email: 'john@example.com',
-        username: 'johndoe',
         password: 'password123',
         phoneNumber: '08012345678',
+        address: '123 Main Street, Lagos',
+        governmentId: 'A12345678',
       })
     })
 
@@ -71,12 +71,12 @@ describe('useRegister', () => {
 
     await act(async () => {
       await result.current.register({
-        firstName: 'John',
-        lastName: 'Doe',
+        fullName: 'John Doe',
         email: 'john@example.com',
-        username: 'johndoe',
         password: 'password123',
         phoneNumber: '08012345678',
+        address: '123 Main Street, Lagos',
+        governmentId: 'A12345678',
       })
     })
 
