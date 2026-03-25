@@ -14,6 +14,14 @@ import type {
  * This keeps API knowledge in one place — if an endpoint changes, only this file changes.
  */
 
+// Represents the backend's standard ApiResponse<T> wrapper shape.
+// Every endpoint returns { status, message, data: T } — we unwrap to T before returning.
+interface ApiResponse<T> {
+  data: T
+  message: string
+  status: number
+}
+
 // POST /api/v1/users/register
 export const registerUser = async (
   data: RegisterRequest
@@ -26,11 +34,11 @@ export const registerUser = async (
 export const loginUser = async (
   data: LoginRequest
 ): Promise<LoginResponse> => {
-  const response = await apiClient.post<LoginResponse>(
+  const response = await apiClient.post<ApiResponse<LoginResponse>>(
     '/api/v1/auth/login',
     data
   )
-  return response.data
+  return response.data.data
 }
 
 // POST /api/v1/2fa/validate
@@ -38,17 +46,17 @@ export const loginUser = async (
 export const validateTwoFactor = async (
   data: TwoFactorValidateRequest
 ): Promise<AuthSuccessResponse> => {
-  const response = await apiClient.post<AuthSuccessResponse>(
+  const response = await apiClient.post<ApiResponse<AuthSuccessResponse>>(
     '/api/v1/2fa/validate',
     data
   )
-  return response.data
+  return response.data.data
 }
 
 // POST /api/v1/auth/refresh
 // Sends the refresh token cookie and returns a new access token
 export const refreshAccessToken = async (): Promise<AuthSuccessResponse> => {
-  const response = await apiClient.post<AuthSuccessResponse>(
+  const response = await apiClient.post<ApiResponse<AuthSuccessResponse>>(
     '/api/v1/auth/refresh',
     {},
     {
@@ -57,5 +65,5 @@ export const refreshAccessToken = async (): Promise<AuthSuccessResponse> => {
       withCredentials: true,
     }
   )
-  return response.data
+  return response.data.data
 }

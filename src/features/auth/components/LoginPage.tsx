@@ -17,7 +17,7 @@ const LoginPage = () => {
   const { login, isLoading, errorMessage, requires2FA, tempToken } = useLogin()
   const { user, isAuthenticated } = useAuthStore()
 
-  const [usernameOrEmail, setUsernameOrEmail] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [validationError, setValidationError] = useState<string | null>(null)
 
@@ -48,8 +48,8 @@ const LoginPage = () => {
     setValidationError(null)
 
     // Client-side validation — check required fields before hitting the API
-    if (!usernameOrEmail.trim()) {
-      setValidationError('Username or email is required')
+    if (!email.trim()) {
+      setValidationError('Email is required')
       return
     }
 
@@ -58,7 +58,7 @@ const LoginPage = () => {
       return
     }
 
-    await login({ usernameOrEmail, password })
+    await login({ email, password })
   }
 
   return (
@@ -90,18 +90,18 @@ const LoginPage = () => {
 
           <div className="flex flex-col gap-5">
             <InputField
-              id="usernameOrEmail"
-              label="Username or Email"
-              type="text"
-              value={usernameOrEmail}
-              onChange={(e) => setUsernameOrEmail(e.target.value)}
-              placeholder="Enter your username or email"
-              error={validationError && !usernameOrEmail.trim()
+              id="email"
+              label="Email Address"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              error={validationError && !email.trim()
                 ? validationError
                 : undefined
               }
               disabled={isLoading}
-              autoComplete="username"
+              autoComplete="email"
             />
 
             <InputField
@@ -111,7 +111,7 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              error={validationError && !password.trim() && usernameOrEmail.trim()
+              error={validationError && !password.trim() && email.trim()
                 ? validationError
                 : undefined
               }

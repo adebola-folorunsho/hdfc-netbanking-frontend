@@ -1,6 +1,6 @@
 // Represents the body sent to POST /api/v1/auth/login
 export interface LoginRequest {
-  usernameOrEmail: string
+  email: string
   password: string
 }
 
@@ -24,12 +24,9 @@ export interface TwoFactorRequiredResponse {
 // Returned by the backend when login is successful and no 2FA is required
 // Also returned after successful 2FA validation
 export interface AuthSuccessResponse {
-  requires2FA: false
   accessToken: string
   refreshToken: string
-  role: 'ROLE_CUSTOMER' | 'ROLE_TELLER' | 'ROLE_ADMIN'
-  userId: string
-  username: string
+  tokenType: 'Bearer'
 }
 
 // Union type — login can return either of these two shapes
@@ -49,6 +46,6 @@ export interface RefreshTokenRequest {
 // The shape of the authenticated user stored in the auth store
 export interface AuthUser {
   userId: string
-  username: string
+  email: string
   role: 'ROLE_CUSTOMER' | 'ROLE_TELLER' | 'ROLE_ADMIN'
 }

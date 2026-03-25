@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode'
 import { useState, useEffect } from 'react'
 import { refreshAccessToken } from '../services/authService'
 import { useAuthStore } from '../../../store/authStore'
@@ -41,10 +42,12 @@ export const useSilentRefresh = () => {
         // Rotate the refresh token cookie with the new one from the response
         setRefreshTokenCookie(response.refreshToken)
 
+        const decoded = jwtDecode<{ sub: string; userId: string; role: 'ROLE_CUSTOMER' | 'ROLE_TELLER' | 'ROLE_ADMIN' }>(response.accessToken)
+
         setAuth(response.accessToken, {
-          userId: response.userId,
-          username: response.username,
-          role: response.role,
+          userId: decoded.userId,
+          email: decoded.sub,
+          role: decoded.role,
         })
       } catch {
         // Refresh token is expired or invalid — clear everything and

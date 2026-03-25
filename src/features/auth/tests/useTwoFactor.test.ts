@@ -21,12 +21,10 @@ describe('useTwoFactor', () => {
 
   it('should call validateTwoFactor with correct data', async () => {
     vi.mocked(authService.validateTwoFactor).mockResolvedValueOnce({
-      requires2FA: false,
-      accessToken: 'access-token',
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwidXNlcklkIjoiMSIsInJvbGUiOiJST0xFX0NVU1RPTUVSIn0.signature',
       refreshToken: 'refresh-token',
-      role: 'ROLE_CUSTOMER',
-      userId: '1',
-      username: 'testuser',
+      tokenType: 'Bearer',
     })
 
     const { result } = renderHook(() =>
@@ -61,12 +59,10 @@ describe('useTwoFactor', () => {
 
   it('should set isSuccess to true when validation succeeds', async () => {
     vi.mocked(authService.validateTwoFactor).mockResolvedValueOnce({
-      requires2FA: false,
-      accessToken: 'access-token',
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwidXNlcklkIjoiMSIsInJvbGUiOiJST0xFX0NVU1RPTUVSIn0.signature',
       refreshToken: 'refresh-token',
-      role: 'ROLE_CUSTOMER',
-      userId: '1',
-      username: 'testuser',
+      tokenType: 'Bearer',
     })
 
     const { result } = renderHook(() =>
