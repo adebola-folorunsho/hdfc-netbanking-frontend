@@ -38,7 +38,7 @@ export const useTwoFactor = ({ tempToken }: UseTwoFactorProps) => {
 
       setAuth(response.accessToken, {
         userId: decoded.userId,
-        username: decoded.sub,
+        email: decoded.sub,
         role: decoded.role,
       })
 

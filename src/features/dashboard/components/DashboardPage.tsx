@@ -74,7 +74,7 @@ const DashboardPage = () => {
               Profile
             </button>
             <span className="text-sm text-gray-300">
-              Welcome, {user?.username}
+              Welcome, {user?.email}
             </span>
             <Button
               label="Sign Out"
